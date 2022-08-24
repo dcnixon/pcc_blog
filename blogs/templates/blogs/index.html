@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Some kind of blog site</title>
+</head>
+<body>
+{% extends "blogs/base.html" %}
+
+{% block content %}
+<p>The Web Log helps you make log postings on the world wide web.</p>
+
+<p>
+    <a href="{% url 'blogs:new_entry' %}">Add new entry</a>
+</p>
+
+<p>Posts:</p>
+
+<ul>
+    {% for blogpost in blogposts %}
+    <li>
+        <p>{{ blogpost.title|linebreaks }}</p>
+        <p>{{ blogpost.date_added|date:'M d, Y H:i' }}</p>
+        <p>{{ blogpost.text|linebreaks }}</p>
+        <p>
+            <a href="{% url 'blogs:edit_entry' blogpost.id %}">Edit post</a>
+        </p>
+    </li>
+    {% empty %}
+    <li>There are no entries for this blog yet.</li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}
+</body>
+</html>
